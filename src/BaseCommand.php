@@ -15,7 +15,6 @@ class BaseCommand extends Command {
      * @param null $default
      * @throws \LogicException
      * @throws InvalidArgumentException
-     * @internal param $question
      * @return mixed
      */
     public function autocomplete($dialog, array $list, $default = null) {
@@ -35,7 +34,7 @@ class BaseCommand extends Command {
      * @internal param string $style
      * @return void
      */
-    public function table(array $headers, $rows, $style = 'default') {
+    public function table(array $headers, array $rows, $style = 'default') {
         $table = $this->getHelperSet()->get('table');
         $table->setHeaders($headers);
         $table->setRows($rows);

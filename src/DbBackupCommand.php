@@ -85,13 +85,16 @@ class DbBackupCommand extends BaseCommand {
             $this->validateArguments();
         }
 
+        $filename = $this->option('filename') === null ? App::environment() . '-' . Carbon::now()->format('Y-m-d-H-i-s') . '.sql': $this->option('filename');
+
         $this->info('Dumping database and uploading...');
         $this->backupProcedure->run(
             $this->option('database'),
             $this->option('destination'),
             $this->option('destinationPath'),
             $this->option('compression'),
-            App::environment() . '-' . Carbon::now()->format('Y-m-d-H-i-s') . '.sql'
+            $filename
+
         );
 
         $this->line('');
@@ -218,6 +221,7 @@ class DbBackupCommand extends BaseCommand {
             ['destination', null, InputOption::VALUE_OPTIONAL, 'Destination configuration name', null],
             ['destinationPath', null, InputOption::VALUE_OPTIONAL, 'File destination path', null],
             ['compression', null, InputOption::VALUE_OPTIONAL, 'Compression type', null],
+            ['filename', null, InputOption::VALUE_OPTIONAL, 'Name of the backup file', null],
         ];
     }
 }
