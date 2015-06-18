@@ -1,5 +1,7 @@
 <?php namespace BackupManager\Laravel;
 
+use App;
+use Carbon\Carbon;
 use Symfony\Component\Console\Input\InputOption;
 use BackupManager\Databases\DatabaseProvider;
 use BackupManager\Procedures\BackupProcedure;
@@ -88,7 +90,8 @@ class DbBackupCommand extends BaseCommand {
             $this->option('database'),
             $this->option('destination'),
             $this->option('destinationPath'),
-            $this->option('compression')
+            $this->option('compression'),
+            App::environment() . '-' . Carbon::now()->format('Y-m-d-H-i-s') . '.sql'
         );
 
         $this->line('');
@@ -186,7 +189,7 @@ class DbBackupCommand extends BaseCommand {
             $this->option('compression')
         ));
         $this->line('');
-        $confirmation = $this->confirm('Are these correct? [Y/n]');
+        $confirmation = $this->confirm('Are these correct? [y/N]');
         if ( ! $confirmation) {
             $this->reaskArguments();
         }

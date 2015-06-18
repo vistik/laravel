@@ -22,7 +22,8 @@ class Laravel5BackupManagerServiceProvider extends ServiceProvider {
      * @return void
      */
     public function boot() {
-        $this->publishes([config_path() . "/backup-manager.php" => config_path('backup-manager.php')], 'backup-manager');
+        $configPath = base_path('config');
+        $this->publishes([$configPath . "/backup-manager.php" => config_path('backup-manager.php')], 'backup-manager');
     }
 
     /**
@@ -32,7 +33,8 @@ class Laravel5BackupManagerServiceProvider extends ServiceProvider {
      */
     public function register() {
 
-        $this->mergeConfigFrom(config_path() . '/backup-manager.php', 'backup-manager');
+        $configPath = base_path('config');
+        $this->mergeConfigFrom($configPath . '/backup-manager.php', 'backup-manager');
         $this->registerFilesystemProvider();
         $this->registerDatabaseProvider();
         $this->registerCompressorProvider();
